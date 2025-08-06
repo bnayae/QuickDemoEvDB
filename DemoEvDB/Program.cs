@@ -1,4 +1,5 @@
 using EvDb.Core;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,10 +10,27 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add JSON serialization options to serialize enums as strings
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
 EvDbStorageContext context = new EvDbStorageContext("workshop-2025-08", builder.Environment.EnvironmentName, "Users");
 builder.Services.AddEvDb()
-        .AddFundsFactory(c => c.UseMongoDBStoreForEvDbStream());
+        .AddFundsFactory(c => c.UseMongoDBStoreForEvDbStream(), context);
 
+builder.Services.AddEvDb()
+        .AddFundsWithOutboxFactory(c => c.UseMongoDBStoreForEvDbStream(), context);
+
+builder.Services.AddEvDb()
+        .AddFundsWithBalanceFactory(c => c.UseMongoDBStoreForEvDbStream(), context)
+        .DefaultSnapshotConfiguration(c => c.UseMongoDBForEvDbSnapshot(), context);
+
+builder.Services.AddEvDb()
+        .AddFundsWithOutboxWithViewsFactory(c => c.UseMongoDBStoreForEvDbStream(), context)
+        .DefaultSnapshotConfiguration(c => c.UseMongoDBForEvDbSnapshot(), context);
 
 var app = builder.Build();
 

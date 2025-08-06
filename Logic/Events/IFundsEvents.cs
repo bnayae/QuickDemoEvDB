@@ -4,5 +4,5 @@ namespace Logic;
 
 [EvDbAttachEventType<WithdrewEvent>]
 [EvDbAttachEventType<DepositedEvent>]
-public partial interface IFundsEvents 
+public partial interface IFundsEvents
 { }

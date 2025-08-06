@@ -1,11 +1,55 @@
 @DemoEvDB_HostAddress = http://localhost:5151
 
-POST {{DemoEvDB_HostAddress}}/demo/1
+POST {{DemoEvDB_HostAddress}}/EventsOnly/1
 Accept: application/json
 content-type: application/json
 
 {
-  "funds": 100
+  "funds": 200,
+  "action": "Deposit"
 }
 
 ###
+
+POST {{DemoEvDB_HostAddress}}/EventsAndOutbox/1
+Accept: application/json
+content-type: application/json
+
+{
+  "funds": 200,
+  "action": "Deposit"
+}
+
+###
+
+POST {{DemoEvDB_HostAddress}}/EventsAndViews/1
+Accept: application/json
+content-type: application/json
+
+{
+  "funds": 100,
+  "action": "Deposit"
+}
+
+###
+
+Get {{DemoEvDB_HostAddress}}/EventsAndViews/1
+Accept: application/json
+
+
+###
+
+POST {{DemoEvDB_HostAddress}}/EventsAndViews/1
+Accept: application/json
+content-type: application/json
+
+{
+  "funds": 100,
+  "action": "Deposit"
+}
+
+###
+
+Get {{DemoEvDB_HostAddress}}/EventsOutboxAndViews/1
+Accept: application/json
+

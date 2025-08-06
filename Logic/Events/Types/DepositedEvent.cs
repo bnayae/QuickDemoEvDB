@@ -7,6 +7,6 @@ namespace Logic;
 /// </summary>
 [EvDbDefineEventPayload("deposited_v1")]
 public readonly partial record struct DepositedEvent(string AccountId)
-{   
+{
     public required double Amount { get; init; }
 }
