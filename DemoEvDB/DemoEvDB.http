@@ -1,0 +1,11 @@
+@DemoEvDB_HostAddress = http://localhost:5151
+
+POST {{DemoEvDB_HostAddress}}/demo/1
+Accept: application/json
+content-type: application/json
+
+{
+  "funds": 100
+}
+
+###
